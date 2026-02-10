@@ -2,101 +2,130 @@
 
 import React from "react";
 import {
-  Code2,
-  Stethoscope,
-  Building2,
+  Code,
+  Heartbeat,
+  Graph,
   Cpu,
-  TrendingUp,
   Megaphone,
-  Briefcase,
-  Globe,
-  ShoppingCart
-} from "lucide-react";
+  ShoppingCart,
+  ArrowRight
+} from "phosphor-react";
+import { motion, Variants } from "framer-motion";
 
-// Data array - easy to edit or fetch from an API later
 const industries = [
   {
-    title: "IT & Software",
-    description: "Sourcing top-tier developers, DevOps engineers, and product managers for startups and enterprises.",
-    icon: <Code2 className="w-8 h-8 text-blue-600" />,
+    title: "Software Intelligence",
+    description: "Firms: Sourcing elite engineers. Talent: Accessing AI-native career paths.",
+    icon: <Code size={36} weight="duotone" className="text-[#044396]" />,
   },
   {
-    title: "Healthcare & Life Sciences",
-    description: "Connecting hospitals and clinics with qualified medical professionals, from nursing to administration.",
-    icon: <Stethoscope className="w-8 h-8 text-emerald-600" />,
+    title: "BioHealth Tech",
+    description: "Firms: Specialist acquisition. Talent: Bridging Breakthrough innovations.",
+    icon: <Heartbeat size={36} weight="duotone" className="text-[#044396]" />,
   },
   {
-    title: "Finance & Fintech",
-    description: "Expert recruitment for banking, accounting, investment firms, and financial technology sectors.",
-    icon: <TrendingUp className="w-8 h-8 text-indigo-600" />,
+    title: "Venture Finance",
+    description: "Firms: Staffing fintech leaders. Talent: Scaling capital market careers.",
+    icon: <Graph size={36} weight="duotone" className="text-[#044396]" />,
   },
   {
-    title: "Engineering & Manufacturing",
-    description: "Technical staffing for civil, mechanical, and electrical engineering roles across various verticals.",
-    icon: <Cpu className="w-8 h-8 text-orange-600" />,
+    title: "Neural Robotics",
+    description: "Firms: Connecting automation experts. Talent: Powering manufacturing giants.",
+    icon: <Cpu size={36} weight="duotone" className="text-[#044396]" />,
   },
   {
-    title: "Marketing & Creative",
-    description: "Finding the creative minds and strategic thinkers who build brands and drive digital growth.",
-    icon: <Megaphone className="w-8 h-8 text-pink-600" />,
+    title: "Cognitive Growth",
+    description: "Firms: AI-driven branding teams. Talent: High-scale execution roles.",
+    icon: <Megaphone size={36} weight="duotone" className="text-[#044396]" />,
   },
   {
-    title: "Retail & E-commerce",
-    description: "Staffing solutions for supply chain, logistics, and retail management in the digital age.",
-    icon: <ShoppingCart className="w-8 h-8 text-purple-600" />,
+    title: "Global Commerce",
+    description: "Firms: Lead supply chain optimization. Talent: Directing retail operations.",
+    icon: <ShoppingCart size={36} weight="duotone" className="text-[#044396]" />,
   },
 ];
 
 const IndustriesSection = () => {
+
+
+  const headerVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 1, ease: "circOut" }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.8,
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }
+    })
+  };
+
   return (
-    <section className="py-20 bg-transparent" id="industries">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      className="py-32 relative overflow-hidden min-h-screen flex flex-col justify-center bg-white scroll-mt-24"
+      id="industries"
+    >
 
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-2">
-            Our Expertise
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <motion.div
+          className="text-center mb-40"
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-[#044396]/10 bg-[#044396]/5 text-[#044396] text-[11px] font-bold uppercase tracking-[0.2em] mb-12 backdrop-blur-sm">
+            <div className="h-2 w-2 rounded-full bg-[#044396] animate-pulse" />
+            Industry Alignment
+          </div>
+
+          <h2 className="text-6xl sm:text-7xl md:text-8xl font-bold text-slate-900 leading-tight tracking-tight">
+            Strategic <br />
+            <span className="text-[#044396]">Domains.</span>
           </h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Industries We Serve
-          </h3>
-          <p className="text-gray-600 text-lg">
-            At TalentMesh, we specialize in understanding the unique nuances of
-            specialized sectors to deliver the perfect candidate match.
-          </p>
-        </div>
+        </motion.div>
 
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {industries.map((industry, index) => (
-            <div
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {industries.map((item, index) => (
+            <motion.div
               key={index}
-              className="bg-white rounded-xl p-8 shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 group"
+              custom={index}
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="group relative bg-white rounded-[3rem] p-12 border border-zinc-100 hover:border-[#044396]/20 transition-all duration-500 shadow-[0_20px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(4,67,150,0.08)]"
             >
-              <div className="mb-6 p-4 bg-gray-50 rounded-full w-fit group-hover:bg-blue-50 transition-colors duration-300">
-                {industry.icon}
+              <div className="mb-10 w-24 h-24 flex items-center justify-center bg-[#f8fafc] rounded-[2rem] group-hover:bg-[#044396] transition-all duration-500 shadow-inner">
+                <div className="group-hover:text-white group-hover:scale-110 transition-all duration-500">
+                  {item.icon}
+                </div>
               </div>
 
-              <h4 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                {industry.title}
-              </h4>
+              <h4 className="text-2xl font-bold text-slate-900 mb-6 tracking-tight group-hover:text-[#044396] transition-colors">{item.title}</h4>
+              <p className="text-slate-700 leading-relaxed text-base font-medium group-hover:text-slate-800 transition-colors">{item.description}</p>
 
-              <p className="text-gray-600 leading-relaxed">
-                {industry.description}
-              </p>
-            </div>
+              <motion.div
+                className="absolute bottom-10 right-12 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0"
+              >
+                <ArrowRight size={24} weight="bold" className="text-[#044396]" />
+              </motion.div>
+            </motion.div>
           ))}
         </div>
-
-        {/* Bottom CTA (Optional) */}
-        <div className="mt-16 text-center">
-          <p className="text-gray-600 mb-4">Don't see your industry listed?</p>
-          <button className="text-blue-600 font-semibold hover:text-blue-800 flex items-center justify-center gap-2 mx-auto transition-colors">
-            Contact us for custom solutions
-            <span aria-hidden="true">&rarr;</span>
-          </button>
-        </div>
-
       </div>
     </section>
   );

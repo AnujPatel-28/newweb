@@ -1,189 +1,138 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, MapPin, Phone, Send, Linkedin, Twitter, CheckCircle2 } from "lucide-react";
+import {
+  Envelope,
+  MapPin,
+  PhoneCall,
+  PaperPlaneTilt,
+  Globe
+} from "phosphor-react";
+import { motion } from "framer-motion";
 
-const ContactSection: React.FC = () => {
+const ContactSection = () => {
   const [userType, setUserType] = useState<"client" | "candidate">("client");
+
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your form submission logic here (e.g., connect to EmailJS or API)
-    alert(`Form submitted as ${userType}!`);
+    alert(`Transmission complete to ${userType} protocol.`);
   };
 
   return (
-    <section id="contact" className="py-24 bg-transparent relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-purple-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+    <section
+      id="contact"
+      className="py-32 relative overflow-hidden min-h-screen flex flex-col justify-center bg-zinc-50/30 scroll-mt-24"
+    >
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
 
-          {/* Left Column: Contact Info & Value Prop */}
-          <div>
-            <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-2">
-              Get in Touch
-            </h2>
-            <h3 className="text-4xl font-bold text-gray-900 mb-6">
-              Let's Build Your <br />
-              <span className="text-blue-600">Dream Team</span> Today.
+          {/* Left: Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, ease: "circOut" }}
+            viewport={{ once: true }}
+          >
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-900 text-[11px] font-black uppercase tracking-[0.2em] mb-12 shadow-sm backdrop-blur-sm">
+              <Globe size={18} weight="bold" className="text-slate-400" />
+              Neural Connection
+            </div>
+
+            <h3 className="text-6xl md:text-7xl font-bold text-slate-900 leading-tight tracking-tight mb-16">
+              Talk <br />
+              <span className="text-slate-500">Talent.</span>
             </h3>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Whether you are a startup looking to scale or a professional seeking your next challenge, TalentMesh is here to bridge the gap.
-            </p>
 
-            <div className="space-y-8">
-              {/* Contact Details */}
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-blue-50 rounded-lg text-blue-600">
-                  <MapPin className="w-6 h-6" />
+            <div className="space-y-12">
+              {[
+                { icon: MapPin, title: "Neural Hub", info: "Global Autonomous Operations" },
+                { icon: Envelope, title: "Direct Link", info: "logic@talentmesh.ai" },
+                { icon: PhoneCall, title: "Voice Node", info: "+1 (888) MESH-LOGIC" }
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-8 group">
+                  <div className="p-6 bg-slate-50 rounded-3xl text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all duration-700 border border-slate-100">
+                    <item.icon size={32} weight="duotone" />
+                  </div>
+                  <div>
+                    <h4 className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{item.title}</h4>
+                    <p className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight group-hover:text-slate-600 transition-colors duration-500">{item.info}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900">Headquarters</h4>
-                  <p className="text-gray-600">123 Business Park, Sector 5<br />Tech City, State, 500081</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-blue-50 rounded-lg text-blue-600">
-                  <Mail className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900">Email Us</h4>
-                  <p className="text-gray-600">hello@talentmesh.com</p>
-                  <p className="text-gray-500 text-sm">recruitment@talentmesh.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-blue-50 rounded-lg text-blue-600">
-                  <Phone className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-gray-900">Call Us</h4>
-                  <p className="text-gray-600">+91 987 654 3210</p>
-                  <p className="text-gray-500 text-sm">Mon-Fri from 9am to 6pm</p>
-                </div>
-              </div>
+              ))}
             </div>
+          </motion.div>
 
-            {/* Social Proof / Trust */}
-            <div className="mt-12 pt-8 border-t border-gray-100">
-              <p className="text-sm font-semibold text-gray-500 uppercase mb-4">Connect with us</p>
-              <div className="flex gap-4">
-                <a href="#" className="p-3 bg-gray-100 rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300">
-                  <Linkedin className="w-5 h-5" />
-                </a>
-                <a href="#" className="p-3 bg-gray-100 rounded-full hover:bg-blue-400 hover:text-white transition-all duration-300">
-                  <Twitter className="w-5 h-5" />
-                </a>
+          {/* Right: Modern Compact Form */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "circOut", delay: 0.2 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-[4rem] p-12 lg:p-20 border border-zinc-200 shadow-[0_40px_80px_rgba(0,0,0,0.06)] relative overflow-hidden w-full lg:max-w-2xl mx-auto lg:mx-0"
+          >
+            <div className="absolute top-0 right-0 w-80 h-80 bg-slate-100 blur-[120px] rounded-full" />
+
+            <form onSubmit={handleSubmit} className="relative z-10 space-y-10">
+              <div className="bg-zinc-50 p-2 rounded-[2rem] flex border border-zinc-200">
+                {["client", "candidate"].map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setUserType(type as any)}
+                    className={`flex-1 py-4 text-[10px] font-black uppercase tracking-[0.2em] rounded-full transition-all duration-700 ${userType === type
+                      ? "bg-slate-900 text-white shadow-xl"
+                      : "text-slate-400 hover:text-slate-600"
+                      }`}
+                  >
+                    {type === "client" ? "Hiring Entity" : "Career Specialist"}
+                  </button>
+                ))}
               </div>
-            </div>
-          </div>
 
-          {/* Right Column: Interactive Form */}
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
-
-            {/* Toggle Switch */}
-            <div className="bg-gray-100 p-1 rounded-lg flex mb-8">
-              <button
-                onClick={() => setUserType("client")}
-                className={`flex-1 py-2.5 text-sm font-semibold rounded-md transition-all duration-200 ${userType === "client"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
-                  }`}
-              >
-                I'm Hiring Talent
-              </button>
-              <button
-                onClick={() => setUserType("candidate")}
-                className={`flex-1 py-2.5 text-sm font-semibold rounded-md transition-all duration-200 ${userType === "candidate"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
-                  }`}
-              >
-                I'm Looking for a Job
-              </button>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+              <div className="space-y-8">
+                <div className="group border-b-2 border-zinc-100 focus-within:border-slate-900 transition-colors">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Identification</p>
                   <input
                     type="text"
-                    id="firstName"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    placeholder="John"
+                    className="w-full bg-transparent pb-6 text-2xl font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight"
+                    placeholder="Full Name / Brand"
                     required
                   />
                 </div>
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                <div className="group border-b-2 border-zinc-100 focus-within:border-slate-900 transition-colors">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Sync Endpoint</p>
                   <input
-                    type="text"
-                    id="lastName"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    placeholder="Doe"
+                    type="email"
+                    className="w-full bg-transparent pb-6 text-2xl font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight"
+                    placeholder="Email Address"
+                    required
+                  />
+                </div>
+                <div className="group border-b-2 border-zinc-100 focus-within:border-slate-900 transition-colors">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Core Mission</p>
+                  <textarea
+                    rows={4}
+                    className="w-full bg-transparent pb-6 text-2xl font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight resize-none"
+                    placeholder="Mission Parameters / Key Requirements"
                     required
                   />
                 </div>
               </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Work Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                  placeholder="john@company.com"
-                  required
-                />
-              </div>
-
-              {/* Dynamic Field based on Toggle */}
-              <div>
-                <label htmlFor="details" className="block text-sm font-medium text-gray-700 mb-1">
-                  {userType === "client" ? "Company Name" : "Current Job Title"}
-                </label>
-                <input
-                  type="text"
-                  id="details"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                  placeholder={userType === "client" ? "Tech Corp Inc." : "Senior Developer"}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                <textarea
-                  id="message"
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
-                  placeholder={
-                    userType === "client"
-                      ? "We are looking for a Senior React Developer..."
-                      : "I am interested in remote opportunities in..."
-                  }
-                  required
-                ></textarea>
-              </div>
-
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30"
+                className="w-full bg-slate-900 text-white font-black py-7 rounded-full shadow-[0_20px_40px_rgba(15,23,42,0.2)] hover:shadow-none flex items-center justify-center gap-6 uppercase tracking-[0.3em] transition-all text-sm"
               >
-                Send Message
-                <Send className="w-4 h-4" />
-              </button>
-
-              <p className="text-center text-xs text-gray-500 mt-4">
-                By sending this form, you agree to our Terms & Privacy Policy.
-              </p>
+                Initialize Link
+                <PaperPlaneTilt size={20} weight="bold" />
+              </motion.button>
             </form>
-          </div>
+          </motion.div>
 
         </div>
       </div>

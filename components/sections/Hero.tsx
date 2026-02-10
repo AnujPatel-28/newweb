@@ -1,148 +1,128 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import React from 'react';
+import { motion, Variants } from 'framer-motion';
+import { Sparkle, Target, Cpu } from 'phosphor-react';
 import HeroBackground from './HeroBackground';
-import RecruitingVisual from './RecruitingVisual';
 
 export default function HeroContextSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
 
-  // Parallax for text
-  const textY = useTransform(scrollY, [0, 300], [0, 100]);
-  const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const itemVariants: Variants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+      },
+    },
+  };
 
   return (
-    <section ref={containerRef} className="relative min-h-[90vh] w-full pt-32 pb-20 overflow-hidden font-sans selection:bg-blue-500/30 bg-white text-slate-900">
+    <section
+      id="hero"
+      className="relative min-h-[110vh] w-full flex items-center justify-center pt-32 pb-48 overflow-hidden bg-white selection:bg-[#044396]/20"
+    >
 
-      {/* 1. BACKGROUND */}
       <HeroBackground />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-center justify-center text-center max-w-6xl mx-auto"
+        >
+          {/* Badge */}
+          <motion.div variants={itemVariants} className="mb-12">
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-[#044396]/10 bg-[#044396]/5 text-[#044396] text-[11px] font-black uppercase tracking-[0.4em] backdrop-blur-md shadow-2xl hover:bg-[#044396]/10 transition-colors cursor-default">
+              <span className="flex h-2.5 w-2.5 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#044396] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#044396]"></span>
+              </span>
+              Neural Matching Engine 4.0
+            </div>
+          </motion.div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-          {/* LEFT COLUMN: Text Content (Span 7) */}
+          {/* Main Title */}
           <motion.div
-            className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left"
-            style={{ y: textY, opacity: textOpacity }}
+            className="flex flex-col items-center relative"
           >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mb-8 inline-flex"
+            <motion.h1
+              variants={itemVariants}
+              className="text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-black text-slate-900 tracking-tighter leading-[0.9] mb-10"
             >
-              <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-semibold text-blue-600 backdrop-blur-md shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:bg-blue-100 transition-all cursor-pointer">
-                <span className="mr-2 flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                </span>
-                <span className="mr-1">New:</span> AI Matching Engine v2.0
-              </div>
-            </motion.div>
-
-            <h1 className="text-5xl font-extrabold tracking-tight md:text-7xl leading-[1.1]">
-              <motion.span
-                className="block animate-shimmer"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-              >
-                The
-                <span
-                  className="mx-2 animate-shimmer relative inline-block"
-                >
-                  intelligent
-                </span>
-              </motion.span>
-              <motion.span
-                className="block animate-shimmer"
-                style={{ '--color-primary': '#334155' } as React.CSSProperties}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-              >
-                infrastructure for recruiting
-              </motion.span>
-            </h1>
+              Engineering <br />
+              <span className="text-[#044396] inline-block relative">
+                Elite Alignment
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.5, delay: 1.2, ease: "circOut" }}
+                  className="absolute -bottom-3 left-0 h-3 bg-[#044396]/10 rounded-full"
+                />
+              </span>
+            </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="mt-8 max-w-2xl text-lg text-slate-600 md:text-xl leading-relaxed"
+              variants={itemVariants}
+              className="mt-8 max-w-4xl text-lg sm:text-xl md:text-2xl text-slate-700 font-medium leading-relaxed"
             >
-              Connect top talent with leading companies using our autonomous AI agents.
-              Sourcing, screening, and matching with human-level precision at scale.
+              The neural bridge connecting <br className="hidden sm:block" />
+              <span className="text-slate-900">high-performance talent</span> with <span className="text-slate-900">top-tier innovators</span>.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-10 flex flex-wrap gap-4 justify-center lg:justify-start"
+              variants={itemVariants}
+              className="mt-20 flex flex-col md:flex-row gap-8 justify-center items-center"
             >
-              <button className="group relative overflow-hidden rounded-full bg-blue-600 px-8 py-4 font-bold text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:bg-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] hover:-translate-y-1">
-                <span className="relative z-10 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" /> Start Hiring
-                </span>
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />
-              </button>
+              <motion.button
+                whileHover={{ scale: 1.02, y: -4 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative bg-[#044396] text-white px-12 py-6 rounded-2xl font-black text-[13px] uppercase tracking-[0.4em] shadow-[0_20px_50px_rgba(4,67,150,0.4)] hover:shadow-[0_10px_30px_rgba(4,67,150,0.2)] transition-all duration-500 overflow-hidden flex items-center gap-4"
+              >
+                <span className="relative z-10">I&apos;m Hiring</span>
+                <Cpu size={20} weight="bold" className="relative z-10 group-hover:rotate-12 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-black translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500" />
+              </motion.button>
 
-              <button className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-8 py-4 font-bold text-slate-600 transition-all hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 shadow-sm">
-                View Demo <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              <motion.button
+                whileHover={{ scale: 1.02, y: -4 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative bg-white text-black border-2 border-zinc-100 px-12 py-6 rounded-2xl font-black text-[13px] uppercase tracking-[0.4em] hover:border-[#044396] transition-all duration-500 shadow-2xl flex items-center gap-4"
+              >
+                <span className="relative z-10">I&apos;m Seeking</span>
+                <Target size={20} weight="bold" className="text-[#044396] group-hover:scale-110 transition-transform duration-500" />
+              </motion.button>
+            </motion.div>
+
+            {/* Bottom Branded Symbol - Grayscale to Color Interaction */}
+            <motion.div
+              variants={itemVariants}
+              className="mt-12 relative group/logo cursor-pointer"
+            >
+              <div className="absolute inset-0 bg-[#044396]/15 blur-[120px] rounded-full opacity-0 group-hover/logo:opacity-100 transition-opacity duration-1000 -z-10" />
+              <img
+                src="/logo-removebg-preview.png"
+                alt="TalentMesh Symbol"
+                className="w-84 h-84 md:w-126 md:h-126 object-contain filter grayscale opacity-20 group-hover/logo:grayscale-0 group-hover/logo:opacity-100 transition-all duration-1000 ease-in-out"
+              />
             </motion.div>
           </motion.div>
-
-          {/* RIGHT COLUMN: Bento Card Visualization (Span 5) */}
-          <motion.div
-            className="lg:col-span-5 relative"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            {/* Bento Box Container */}
-            <div className="relative h-full min-h-[500px] rounded-3xl border border-white/60 bg-white/40 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] overflow-hidden group transition-all duration-500 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(37,99,235,0.1)]">
-
-              {/* Inner Gradient Highlight - Subtle */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 via-transparent to-purple-100/30 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-
-              {/* Card Content */}
-              <div className="absolute inset-0 p-8 flex flex-col">
-                {/* Top Bar */}
-                <div className="flex justify-between items-center mb-4 z-20">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-slate-200" />
-                    <div className="w-3 h-3 rounded-full bg-slate-200" />
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/50 border border-white/60 backdrop-blur-md">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">System Active</span>
-                  </div>
-                </div>
-
-                {/* Visualization - Taking Full Space */}
-                <div className="flex-1 w-full h-full flex items-center justify-center scale-110">
-                  <RecruitingVisual />
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative Elements behind Bento */}
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/30 rounded-full blur-[60px] -z-10" />
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/30 rounded-full blur-[60px] -z-10" />
-
-          </motion.div>
-
-        </div>
+        </motion.div>
       </div>
-      <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
     </section>
   );
 }

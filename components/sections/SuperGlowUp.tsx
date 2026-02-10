@@ -51,7 +51,7 @@ const SuperGlowUp = () => {
         {/* RISING GRADIENT LAYER */}
         <motion.div
           style={{ height: bgHeight, borderRadius: bgRound }}
-          className="absolute bottom-0 left-0 right-0 z-0 bg-gradient-to-b from-blue-100 to-indigo-900 shadow-[0_-20px_60px_-15px_rgba(37,99,235,0.5)]"
+          className="absolute bottom-0 left-0 right-0 z-0 bg-gradient-to-b from-blue-100 to-blue-900 shadow-[0_-20px_60px_-15px_rgba(37,99,235,0.5)]"
         />
 
         {/* CONTAINER FOR STACKED TEXT */}

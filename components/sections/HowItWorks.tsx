@@ -1,70 +1,95 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
 import {
-  Github,
   Database,
+  BookOpen,
   Cloud,
-  Server,
-  FileJson,
-  Code2,
+  Globe,
+  GithubLogo,
+  Code,
+  Cube,
   HardDrive,
-  Globe
-} from 'lucide-react';
+  Lightning,
+  CaretRight
+} from 'phosphor-react';
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
-/**
- * Utility for tailwind class merging. 
- * If you don't have a 'cn' helper, you can use standard strings.
- */
-const cn = (...classes: string[]) => classes.filter(Boolean).join(' ');
-// 1. CONFIGURATION: The icons you want to display in the circle
 const INTEGRATIONS = [
-  { icon: Database, color: "#4285F4", label: "Drive" },    // Google Driveish
-  { icon: FileJson, color: "#000000", label: "Notion" },   // Notionish
-  { icon: Cloud, color: "#FF9900", label: "AWS" },         // AWSish
-  { icon: Globe, color: "#3776AB", label: "Python" },      // Pythonish
-  { icon: Github, color: "#000000", label: "GitHub" },
-  { icon: Code2, color: "#F7DF1E", label: "JS" },          // JSish
-  { icon: Server, color: "#E34F26", label: "Server" },
-  { icon: HardDrive, color: "#333333", label: "Storage" },
+  { icon: Database, label: "Neural DB" },
+  { icon: BookOpen, label: "Knowledge" },
+  { icon: Cloud, label: "Core Cloud" },
+  { icon: Globe, label: "Distribution" },
+  { icon: GithubLogo, label: "Source" },
+  { icon: Code, label: "Intelligence" },
+  { icon: Cube, label: "Execution" },
+  { icon: HardDrive, label: "Persistence" },
 ];
 
-const RADIUS = 140; // The distance of icons from the center
+const RADIUS = 250;
 
 export default function IntegrationsSection() {
-  return (
-    <section className="relative w-full overflow-hidden bg-transparent py-24 text-slate-800">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+  const { scrollYProgress } = useScroll();
 
-          {/* LEFT COLUMN: The Visual Hub */}
-          <div className="relative flex h-[500px] w-full items-center justify-center">
-            <IntegrationGraph />
+
+
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 720]);
+  const springRotate = useSpring(rotate, { stiffness: 40, damping: 20 });
+
+  return (
+    <section
+      id="how-it-works"
+      className="relative w-full overflow-hidden py-32 min-h-screen flex items-center bg-white scroll-mt-24"
+    >
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 items-center gap-32 lg:grid-cols-2">
+
+          {/* LEFT: Abstract Orbit Hub */}
+          <div className="relative flex h-[700px] w-full items-center justify-center lg:order-last">
+            <motion.div
+              style={{ rotate: springRotate }}
+              className="relative h-full w-full flex items-center justify-center"
+            >
+              <IntegrationGraph />
+            </motion.div>
+
+            {/* Focal Point Glow */}
+            <div className="absolute w-[500px] h-[500px] bg-[#044396]/5 rounded-full blur-[120px] animate-pulse" />
           </div>
 
-          {/* RIGHT COLUMN: The Text Content */}
-          <div className="flex flex-col items-start space-y-6">
-            <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50/50 px-3 py-1 text-sm text-blue-600 backdrop-blur-sm">
-              Connectors and Integrations
+          {/* RIGHT: Modern Typography */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, ease: "circOut" }}
+            viewport={{ once: true }}
+            className="flex flex-col items-start"
+          >
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-[#044396]/10 bg-[#044396]/5 text-[#044396] text-[11px] font-bold uppercase tracking-[0.2em] mb-12 backdrop-blur-sm">
+              <Lightning size={16} weight="fill" className="animate-pulse" />
+              Pulse Protocol
             </div>
 
-            <h2 className="text-4xl font-medium tracking-tight text-[#262F40] md:text-5xl lg:text-6xl">
-              Bring your user’s <br />
-              <span className="text-blue-600">context from</span> <br />
-              where they are.
+            <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 leading-tight mb-12">
+              Neural <br />
+              <span className="text-[#044396]">Orchestration</span> <br />
+              System.
             </h2>
 
-            <p className="max-w-md text-lg text-slate-500">
-              TalentMesh connects to LinkedIn, GitHub, Jira and more and syncs candidate context.
-              Forget custom infra. TalentMesh drops into your stack with just a few lines of code.
+            <p className="max-w-2xl text-xl md:text-2xl text-slate-700 leading-relaxed font-medium mb-20">
+              A unified intelligence ecosystem bridging the entire lifecycle. We orchestrate complex workflows for <span className="text-slate-900 font-bold underline decoration-[#044396] decoration-4 underline-offset-8">Talent Sourcing</span> & <span className="text-slate-900 font-bold underline decoration-[#044396] decoration-4 underline-offset-8">Career Trajectories</span>.
             </p>
 
-            <button className="group mt-4 flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium transition-colors hover:bg-slate-50 hover:shadow-md">
-              Read more about connectors
-              <span className="transition-transform group-hover:translate-x-1">→</span>
-            </button>
-          </div>
+            <motion.button
+              whileHover={{ y: -5, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-14 py-7 rounded-3xl bg-[#000000] text-white font-black text-xs uppercase tracking-[0.3em] transition-all shadow-2xl hover:bg-[#044396] flex items-center gap-4"
+            >
+              Analyze Architecture
+              <CaretRight size={18} weight="bold" />
+            </motion.button>
+          </motion.div>
 
         </div>
       </div>
@@ -72,73 +97,57 @@ export default function IntegrationsSection() {
   );
 }
 
-// SUB-COMPONENT: The Graph itself
 const IntegrationGraph = () => {
   return (
-    <div className="relative flex h-full w-full items-center justify-center">
-
-      {/* 1. BACKGROUND LINES (SVG) */}
-      {/* We use an SVG overlay to draw lines from center (50%,50%) to each icon's position */}
-      <svg className="absolute inset-0 h-full w-full opacity-20 pointer-events-none">
-        {INTEGRATIONS.map((_, i) => {
-          const angle = (i * 360) / INTEGRATIONS.length;
-          // Convert polar to cartesian coordinates for SVG lines
-          // We add 50% to center it in the SVG container
-          const x = 50 + (40 * Math.cos((angle * Math.PI) / 180)); // 40% width radius
-          const y = 50 + (40 * Math.sin((angle * Math.PI) / 180));
-          return (
-            <line
-              key={i}
-              x1="50%"
-              y1="50%"
-              x2={`${x}%`}
-              y2={`${y}%`}
-              stroke="#94a3b8" // Slate-400
-              strokeWidth="1"
-            />
-          );
-        })}
-      </svg>
-
-      {/* 2. CENTRAL LOGO */}
-      {/* This is the glowing core */}
-      <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-3xl bg-white border border-blue-100 shadow-[0_0_50px_-12px_rgba(37,99,235,0.3)]">
-        {/* Simple Abstract Logo shape */}
-        <div className="relative h-12 w-12 text-blue-600">
-          <svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full drop-shadow-md">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-          </svg>
-        </div>
+    <div className="relative flex h-full w-full items-center justify-center pointer-events-none">
+      {/* Central Identity */}
+      <div className="relative z-20 flex h-48 w-48 items-center justify-center rounded-[4rem] bg-white text-[#044396] shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-zinc-100">
+        <img
+          src="/TalentMesh_Logo-removebg-preview.png"
+          alt="TalentMesh Hub"
+          className="w-32 h-auto object-contain relative z-20"
+        />
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.3, 0.1] }}
+          transition={{ duration: 4, repeat: Infinity }}
+          className="absolute -inset-8 bg-[#044396] blur-3xl rounded-full -z-10"
+        />
       </div>
 
-      {/* 3. ORBITING ICONS */}
+      {/* Orbitings */}
       {INTEGRATIONS.map((item, i) => {
-        // Calculate position
         const angle = (i * 360) / INTEGRATIONS.length;
         const x = RADIUS * Math.cos((angle * Math.PI) / 180);
         const y = RADIUS * Math.sin((angle * Math.PI) / 180);
 
         return (
-          <motion.div
-            key={i}
-            className="absolute z-20 flex h-14 w-14 items-center justify-center rounded-xl border border-slate-100 bg-white/80 shadow-md backdrop-blur-sm"
-            style={{
-              x: x, // Framer motion handles the transform: translate(x, y) automatically
-              y: y,
-            }}
-            // Add a subtle floating animation
-            animate={{
-              y: [y - 5, y + 5, y - 5],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.2, // Stagger the animation so they don't move in sync
-            }}
-          >
-            <item.icon className="h-6 w-6" style={{ color: item.color }} />
-          </motion.div>
+          <React.Fragment key={i}>
+            {/* Connector Beam */}
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: RADIUS }}
+              transition={{ delay: 0.5 + i * 0.1, duration: 1.5 }}
+              className="absolute h-[2px] bg-gradient-to-r from-[#044396]/20 via-[#044396]/5 to-transparent origin-left left-1/2 top-1/2"
+              style={{ rotate: angle }}
+            />
+
+            {/* Floating Node */}
+            <motion.div
+              className="absolute z-20 flex h-24 w-24 flex-col items-center justify-center gap-2 rounded-[2rem] border border-zinc-50 bg-white shadow-2xl"
+              style={{ x: x, y: y }}
+              animate={{
+                rotate: [0, -720], // Counter-rotation
+                y: [y - 15, y + 15, y - 15]
+              }}
+              transition={{
+                rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }
+              }}
+            >
+              <item.icon size={32} weight="duotone" className="text-[#044396]" />
+              <span className="text-[8px] font-black uppercase text-zinc-300 tracking-tighter">{item.label}</span>
+            </motion.div>
+          </React.Fragment>
         );
       })}
     </div>
