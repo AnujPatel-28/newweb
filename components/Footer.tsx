@@ -179,7 +179,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20 md:mb-40">
                     <div className="lg:col-span-1 space-y-8 md:space-y-12 order-last lg:order-first mt-8 lg:mt-0">
                         <div className="flex items-center gap-4">
-                            {[InstagramLogo, LinkedinLogo, TwitterLogo, GithubLogo].map((Icon, idx) => (
+                            {[InstagramLogo, LinkedinLogo, TwitterLogo].map((Icon, idx) => (
                                 <Link key={idx} href="/under-construction" className="w-14 h-14 flex items-center justify-center bg-zinc-50 rounded-2xl text-slate-400 hover:bg-slate-900 hover:text-white transition-all duration-500 hover:-translate-y-2 border border-zinc-100 shadow-sm">
                                     <Icon size={24} weight="bold" />
                                 </Link>

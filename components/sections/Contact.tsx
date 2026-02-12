@@ -54,8 +54,8 @@ const ContactSection = () => {
     >
       <GridPattern opacity={0.3} />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-32 items-center">
+      <div className="max-w-5xl mx-auto px-6 relative z-10 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
 
           {/* Left: Content */}
           <motion.div
@@ -72,7 +72,7 @@ const ContactSection = () => {
 
             <h3 className="text-4xl sm:text-6xl md:text-7xl font-bold text-slate-900 leading-tight tracking-tight mb-8 md:mb-12">
               Talk <br />
-              <span className="text-slate-500">Talent.</span>
+              <span className="text-[#044396]g">Talent.</span>
             </h3>
 
             <div className="space-y-8 md:space-y-12">
@@ -94,25 +94,25 @@ const ContactSection = () => {
             </div>
           </motion.div>
 
-          {/* Right: Modern Compact Form */}
+          {/* Right: Modern Compact Form (Squared) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "circOut", delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-white/80 backdrop-blur-xl rounded-[2rem] md:rounded-[4rem] p-6 md:p-12 lg:p-20 border border-zinc-200 shadow-[0_40px_80px_rgba(0,0,0,0.06)] relative overflow-hidden w-full lg:max-w-2xl mx-auto lg:mx-0"
+            className="bg-white/80 backdrop-blur-xl p-8 md:p-12 border border-zinc-200 shadow-[0_40px_80px_rgba(0,0,0,0.06)] relative overflow-hidden w-full lg:max-w-2xl mx-auto lg:mx-0"
           >
             <div className="absolute top-0 right-0 w-80 h-80 bg-slate-100 blur-[120px] rounded-full pointer-events-none" />
 
-            <form onSubmit={handleSubmit} className="relative z-10 space-y-8 md:space-y-10">
-              <div className="bg-zinc-50 p-1.5 md:p-2 rounded-[2rem] flex flex-col sm:flex-row border border-zinc-200">
+            <form onSubmit={handleSubmit} className="relative z-10 space-y-6 md:space-y-8">
+              <div className="bg-zinc-50 p-1 md:p-1.5 flex flex-col sm:flex-row border border-zinc-200">
                 {["client", "candidate"].map((type) => (
                   <button
                     key={type}
                     type="button"
                     onClick={() => setUserType(type as any)}
-                    className={`flex-1 py-4 text-[10px] font-mono font-black uppercase tracking-[0.2em] rounded-full transition-all duration-700 ${userType === type
-                      ? "bg-slate-900 text-white shadow-xl"
+                    className={`flex-1 py-3 text-[10px] font-mono font-black uppercase tracking-[0.2em] transition-all duration-300 ${userType === type
+                      ? "bg-slate-900 text-white shadow-md"
                       : "text-slate-400 hover:text-slate-600"
                       }`}
                   >
@@ -121,35 +121,35 @@ const ContactSection = () => {
                 ))}
               </div>
 
-              <div className="space-y-6 md:space-y-8">
+              <div className="space-y-5 md:space-y-6">
                 <div className={`group border-b-2 ${errors.name ? 'border-red-300' : 'border-zinc-100'} focus-within:border-slate-900 transition-colors`}>
-                  <p className="text-xs font-mono font-black text-slate-500 uppercase tracking-[0.2em] mb-2 md:mb-4">Name</p>
+                  <p className="text-[10px] font-mono font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Name</p>
                   <input
                     name="name"
                     type="text"
-                    className="w-full bg-transparent pb-4 md:pb-6 text-xl md:text-2xl font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight"
+                    className="w-full bg-transparent pb-3 text-lg font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight"
                     placeholder="Full Name / Company"
                     required
                   />
                   {errors.name && <p className="text-xs text-red-500 mt-2">{errors.name}</p>}
                 </div>
                 <div className={`group border-b-2 ${errors.email ? 'border-red-300' : 'border-zinc-100'} focus-within:border-slate-900 transition-colors`}>
-                  <p className="text-xs font-mono font-black text-slate-500 uppercase tracking-[0.2em] mb-2 md:mb-4">Email</p>
+                  <p className="text-[10px] font-mono font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Email</p>
                   <input
                     name="email"
                     type="email"
-                    className="w-full bg-transparent pb-4 md:pb-6 text-xl md:text-2xl font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight"
+                    className="w-full bg-transparent pb-3 text-lg font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight"
                     placeholder="Email Address"
                     required
                   />
                   {errors.email && <p className="text-xs text-red-500 mt-2">{errors.email}</p>}
                 </div>
                 <div className={`group border-b-2 ${errors.message ? 'border-red-300' : 'border-zinc-100'} focus-within:border-slate-900 transition-colors`}>
-                  <p className="text-xs font-mono font-black text-slate-500 uppercase tracking-[0.2em] mb-2 md:mb-4">Message</p>
+                  <p className="text-[10px] font-mono font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Message</p>
                   <textarea
                     name="message"
-                    rows={4}
-                    className="w-full bg-transparent pb-4 md:pb-6 text-xl md:text-2xl font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight resize-none"
+                    rows={3}
+                    className="w-full bg-transparent pb-3 text-lg font-bold text-slate-900 placeholder-slate-400 outline-none transition-all tracking-tight resize-none"
                     placeholder="How can we help?"
                     required
                   />
@@ -159,20 +159,20 @@ const ContactSection = () => {
 
 
               {formStatus === "success" && (
-                <div className="bg-green-50 border border-green-200 rounded-2xl p-4 mb-6">
-                  <p className="text-green-700 font-medium text-sm text-center">✓ Message sent successfully! We'll be in touch soon.</p>
+                <div className="bg-green-50 border border-green-200 p-4 mb-4">
+                  <p className="text-green-700 font-medium text-xs text-center">✓ Message sent successfully! We'll be in touch soon.</p>
                 </div>
               )}
 
               <motion.button
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.01, y: -1 }}
+                whileTap={{ scale: 0.99 }}
                 type="submit"
                 disabled={formStatus === "success"}
-                className="w-full bg-slate-900 text-white font-black font-mono py-6 md:py-7 rounded-full shadow-[0_20px_40px_rgba(15,23,42,0.2)] hover:shadow-none flex items-center justify-center gap-4 md:gap-6 uppercase tracking-[0.3em] transition-all text-xs md:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-slate-900 text-white font-black font-mono py-5 rounded-none shadow-lg hover:shadow-none flex items-center justify-center gap-4 uppercase tracking-[0.3em] transition-all text-xs disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {formStatus === "success" ? "Message Sent!" : "Send Message"}
-                <PaperPlaneTilt size={20} weight="bold" />
+                <PaperPlaneTilt size={18} weight="bold" />
               </motion.button>
             </form>
           </motion.div>

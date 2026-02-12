@@ -92,18 +92,17 @@ const IndustriesSection = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-[#044396]/10 bg-[#044396]/5 text-[#044396] text-[11px] font-mono font-bold uppercase tracking-[0.2em] mb-12 backdrop-blur-sm shadow-sm ring-1 ring-white/50">
+          <div className="inline-flex items-center gap-3 px-3 rounded-full border border-[#044396]/10 bg-[#044396]/5 text-[#044396] text-[11px] font-mono font-bold uppercase tracking-[0.2em] mb-12 backdrop-blur-sm shadow-sm ring-1 ring-white/50">
             <div className="h-2 w-2 rounded-full bg-[#044396] animate-pulse shadow-[0_0_10px_#044396]" />
             Practice Areas
           </div>
 
           <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold text-slate-900 leading-tight tracking-tight">
-            Strategic <br />
-            <span className="text-[#044396]">Domains.</span>
+            Strategic <span className="text-[#044396]">Domains.</span>
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
           {industries.map((item, index) => (
             <Link href="/under-construction" key={index} className="contents">
               <motion.div
@@ -112,8 +111,8 @@ const IndustriesSection = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-                className="group relative bg-white/60 backdrop-blur-sm rounded-[2.5rem] p-8 md:p-12 border border-slate-100 hover:border-blue-200 transition-all duration-500 shadow-[0_20px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(4,67,150,0.12)] overflow-hidden"
+                whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
+                className="group relative bg-white/60 backdrop-blur-sm p-8 border border-slate-100/50 hover:z-10 transition-all duration-300"
               >
                 {/* Hover Glow Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
