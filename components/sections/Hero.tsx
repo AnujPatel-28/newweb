@@ -1,148 +1,173 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { motion, Variants, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Sparkle, Target, Cpu } from 'phosphor-react';
 import HeroBackground from './HeroBackground';
-import RecruitingVisual from './RecruitingVisual';
+import Magnetic from '../ui/Magnetic';
 
 export default function HeroContextSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
 
-  // Parallax for text
-  const textY = useTransform(scrollY, [0, 300], [0, 100]);
-  const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const itemVariants: Variants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+      },
+    },
+  };
+
+  // --- 3D TILT EFFECT ---
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseX = useSpring(x, { stiffness: 50, damping: 10 });
+  const mouseY = useSpring(y, { stiffness: 50, damping: 10 });
+
+  function handleMouseMove({ clientX, clientY }: React.MouseEvent) {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const xPct = (clientX / windowWidth - 0.5) * 2; // -1 to 1
+    const yPct = (clientY / windowHeight - 0.5) * 2; // -1 to 1
+    x.set(xPct);
+    y.set(yPct);
+  }
+
+  const rotateX = useTransform(mouseY, [-1, 1], [5, -5]); // Tilt up/down
+  const rotateY = useTransform(mouseX, [-1, 1], [-5, 5]); // Tilt left/right
 
   return (
-    <section ref={containerRef} className="relative min-h-[90vh] w-full pt-32 pb-20 overflow-hidden font-sans selection:bg-blue-500/30 bg-white text-slate-900">
+    <section
+      id="hero"
+      onMouseMove={handleMouseMove}
+      className="relative min-h-auto md:min-h-[95vh] w-full flex items-center justify-center pt-20 md:pt-32 pb-8 md:pb-16 overflow-hidden bg-white selection:bg-[#044396]/20 bg-slate-50"
+    >
 
-      {/* 1. BACKGROUND */}
       <HeroBackground />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto mt-25 px-6 relative z-10 w-full perspective-[1000px]">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-center justify-center text-center max-w-6xl mx-auto"
+        >
+          {/* Badge */}
+          <motion.div variants={itemVariants} className="mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-100 bg-blue-50/50 text-blue-700 text-[11px] font-bold uppercase tracking-widest backdrop-blur-md shadow-sm hover:bg-blue-50 transition-colors cursor-default">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#044396]"></span>
+              </span>
+              Next-Gen Staffing & Consulting
+            </div>
+          </motion.div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-          {/* LEFT COLUMN: Text Content (Span 7) */}
+          {/* Main Title - 3D TILT */}
           <motion.div
-            className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left"
-            style={{ y: textY, opacity: textOpacity }}
+            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            className="flex flex-col items-center relative z-20"
           >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mb-8 inline-flex"
+            <motion.h1
+              variants={itemVariants}
+              className="text-3xl sm:text-7xl md:text-8xl lg:text-9xl font-sans font-extrabold text-slate-900 tracking-tighter leading-[0.9] mb-8 drop-shadow-sm"
             >
-              <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-semibold text-blue-600 backdrop-blur-md shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:bg-blue-100 transition-all cursor-pointer">
-                <span className="mr-2 flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                </span>
-                <span className="mr-1">New:</span> AI Matching Engine v2.0
-              </div>
-            </motion.div>
-
-            <h1 className="text-5xl font-extrabold tracking-tight md:text-7xl leading-[1.1]">
-              <motion.span
-                className="block animate-shimmer"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-              >
-                The
-                <span
-                  className="mx-2 animate-shimmer relative inline-block"
-                >
-                  intelligent
-                </span>
-              </motion.span>
-              <motion.span
-                className="block animate-shimmer"
-                style={{ '--color-primary': '#044396' } as React.CSSProperties}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-              >
-                infrastructure for recruiting
-              </motion.span>
-            </h1>
+              Beyond Resumes. <br />
+              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#044396] via-[#2563eb] to-[#044396] bg-[length:200%_auto] animate-gradient-x">
+                Human Precision.
+              </span>
+            </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="mt-8 max-w-2xl text-lg text-slate-600 md:text-xl leading-relaxed"
+              variants={itemVariants}
+              className="mt-6 max-w-3xl text-lg sm:text-xl md:text-2xl text-slate-600 font-medium leading-relaxed tracking-tight"
             >
-              Connect top talent with leading companies using our autonomous AI agents.
-              Sourcing, screening, and matching with human-level precision at scale.
+              The premier staffing partner connecting <br className="hidden sm:block" />
+              <span className="text-slate-900 font-semibold">high-performance talent</span> with <span className="text-slate-900 font-semibold">world-class innovators</span>.
             </motion.p>
 
+            {/* Magnetic Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-10 flex flex-wrap gap-4 justify-center lg:justify-start"
+              variants={itemVariants}
+              className="mt-12 flex flex-col sm:flex-row gap-5 items-center justify-center p-1"
             >
-              <button className="group relative overflow-hidden rounded-full bg-blue-600 px-8 py-4 font-bold text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:bg-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] hover:-translate-y-1">
-                <span className="relative z-10 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" /> Start Hiring
-                </span>
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />
-              </button>
+              <Magnetic>
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  className="group relative bg-[#044396] text-white px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest shadow-[0_10px_40px_rgba(4,67,150,0.3)] hover:shadow-[0_20px_40px_rgba(4,67,150,0.2)] transition-all duration-300 overflow-hidden flex items-center gap-3"
+                >
+                  <span className="relative z-10">Start Hiring</span>
+                  <Cpu size={18} weight="bold" className="relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                  <div className="absolute inset-0 bg-white/10 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300" />
+                </motion.button>
+              </Magnetic>
 
-              <button className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-8 py-4 font-bold text-slate-600 transition-all hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 shadow-sm">
-                View Demo <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              <Magnetic>
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  className="group relative bg-white text-slate-900 border border-slate-200 px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest hover:border-[#044396]/30 hover:bg-slate-50 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-3"
+                >
+                  <span className="relative z-10">Find Work</span>
+                  <Target size={18} weight="bold" className="text-[#044396] group-hover:scale-110 transition-transform duration-300" />
+                </motion.button>
+              </Magnetic>
+            </motion.div>
+
+          </motion.div>
+
+          {/* Bottom Branded Symbol - Enhanced "Living" Effect */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-20 relative group/logo cursor-pointer mb-10"
+          >
+            {/* Permanent Pulsing Glow */}
+            <motion.div
+              animate={{ opacity: [0.5, 0.8, 0.5], scale: [1, 1.1, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-0 bg-[#044396]/20 blur-[100px] rounded-full -z-10"
+            />
+
+            {/* Floating Animation Container */}
+            <motion.div
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src="/logo-removebg-preview.png"
+                alt="TalentMesh Symbol"
+                className="w-84 h-84 md:w-126 md:h-126 object-contain opacity-90 group-hover/logo:opacity-100 group-hover/logo:scale-105 transition-all duration-500 ease-in-out drop-shadow-2xl"
+              />
             </motion.div>
           </motion.div>
 
-          {/* RIGHT COLUMN: Bento Card Visualization (Span 5) */}
-          <motion.div
-            className="lg:col-span-5 relative"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            {/* Bento Box Container */}
-            <div className="relative h-full min-h-[500px] rounded-3xl border border-white/60 bg-white/40 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] overflow-hidden group transition-all duration-500 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(37,99,235,0.1)]">
-
-              {/* Inner Gradient Highlight - Subtle */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 via-transparent to-blue-400/30 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-
-              {/* Card Content */}
-              <div className="absolute inset-0 p-8 flex flex-col">
-                {/* Top Bar */}
-                <div className="flex justify-between items-center mb-4 z-20">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-slate-200" />
-                    <div className="w-3 h-3 rounded-full bg-slate-200" />
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/50 border border-white/60 backdrop-blur-md">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">System Active</span>
-                  </div>
-                </div>
-
-                {/* Visualization - Taking Full Space */}
-                <div className="flex-1 w-full h-full flex items-center justify-center scale-110">
-                  <RecruitingVisual />
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative Elements behind Bento */}
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/30 rounded-full blur-[60px] -z-10" />
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-500/30 rounded-full blur-[60px] -z-10" />
-
-          </motion.div>
-
-        </div>
+        </motion.div>
       </div>
-      <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none mix-blend-multiply"
+      >
+        <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Scroll</div>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-slate-300 to-transparent" />
+      </motion.div>
+
     </section>
   );
 }

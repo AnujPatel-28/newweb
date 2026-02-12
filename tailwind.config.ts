@@ -4,6 +4,10 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-geist-sans)"],
+        mono: ["var(--font-geist-mono)"],
+      },
       animation: {
         "glow-pulse": "glow-pulse 4s ease-in-out infinite", // Check this line
       },

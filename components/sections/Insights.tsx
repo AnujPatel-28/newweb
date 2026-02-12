@@ -2,10 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { Calendar, User, ArrowRight, Clock } from "lucide-react";
-
-// --- Types & Interfaces ---
+import {
+  ArrowRight,
+  Scroll
+} from "phosphor-react";
+import { motion, Variants } from "framer-motion";
 
 interface BlogPost {
   id: number;
@@ -16,18 +17,16 @@ interface BlogPost {
   date: string;
   readTime: string;
   imageUrl: string;
-  slug: string; // URL-friendly string for linking
+  slug: string;
 }
-
-// --- Mock Data (Replace with API or CMS fetch later) ---
 
 const blogPosts: BlogPost[] = [
   {
     id: 1,
-    title: "The Future of Remote Work: Hybrid Models in 2026",
-    excerpt: "Explore how companies are adapting to hybrid work environments and what it means for talent acquisition strategies.",
-    category: "Workplace Trends",
-    author: "Sarah Jenkins",
+    title: "Executive Recruiting Trends in 2026",
+    excerpt: "How companies are leveraging strategic talent partnerships to secure elite architects and innovators.",
+    category: "Market Intelligence",
+    author: "Manya (Founder)",
     date: "Feb 08, 2026",
     readTime: "5 min read",
     imageUrl: "https://images.unsplash.com/photo-1593642532400-2682810df593?auto=format&fit=crop&q=80&w=800",
@@ -35,9 +34,9 @@ const blogPosts: BlogPost[] = [
   },
   {
     id: 2,
-    title: "5 Skills Every Tech Recruiter Looks For",
-    excerpt: "Beyond coding languages, soft skills are becoming the deciding factor for top-tier engineering roles. Here's what matters.",
-    category: "Career Advice",
+    title: "Career Growth Strategies for Elite Talent",
+    excerpt: "Strategic career advancement in today's competitive talent market with expert guidance.",
+    category: "Career Growth",
     author: "David Chen",
     date: "Jan 25, 2026",
     readTime: "4 min read",
@@ -46,10 +45,10 @@ const blogPosts: BlogPost[] = [
   },
   {
     id: 3,
-    title: "Scaling Your Startup Team: A Founder's Guide",
-    excerpt: "When is the right time to hire your first HR manager? We break down the growth stages of successful startups.",
+    title: "Solving the Talent Acquisition Gap",
+    excerpt: "Why traditional recruiting fails and how strategic staffing partnerships bridge the gap for companies and candidates.",
     category: "Leadership",
-    author: "Manya (Founder)",
+    author: "Sarah Jenkins",
     date: "Jan 10, 2026",
     readTime: "7 min read",
     imageUrl: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800",
@@ -58,111 +57,119 @@ const blogPosts: BlogPost[] = [
 ];
 
 const InsightsSection: React.FC = () => {
-  return (
-    <section id="insights" className="py-20 bg-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-          <div className="max-w-2xl">
-            <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-2">
-              Knowledge Hub
-            </h2>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Latest Insights & Career Trends
-            </h3>
-            <p className="text-gray-600 mt-4 text-lg">
-              Expert advice on hiring, job hunting, and the future of work.
-            </p>
+
+
+  const headerVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 1.2, ease: "circOut" }
+    }
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.15,
+        duration: 1,
+        type: "spring",
+        stiffness: 50,
+        damping: 15
+      }
+    })
+  };
+
+  return (
+    <section
+      id="insights"
+      className="relative overflow-hidden py-16 md:py-32 min-h-screen flex flex-col justify-center bg-white scroll-mt-24"
+    >
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <motion.div
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mb-20 md:mb-40 max-w-4xl"
+        >
+          <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-[#044396]/10 bg-[#044396]/5 text-[#044396] text-[11px] font-bold uppercase tracking-[0.2em] mb-12 backdrop-blur-sm">
+            <Scroll size={18} weight="bold" className="animate-pulse" />
+            INSIGHTS
           </div>
 
-          <Link
-            href="/blog"
-            className="hidden md:flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-800 transition-colors group"
-          >
-            View all articles
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
+          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-slate-900 leading-tight tracking-tight">
+            Market <br />
+            <span className="text-[#044396] inline-block relative">
+              Intelligence
+              <motion.span
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
+                className="absolute -bottom-3 left-0 h-2 bg-[#709de9]/20 rounded-full"
+              />
+            </span>
+          </h2>
+        </motion.div>
 
-        {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
-            <article
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {blogPosts.map((post, index) => (
+            <motion.article
               key={post.id}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group border border-gray-100"
+              custom={index}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              whileHover={{ y: -15 }}
+              className="bg-white rounded-[2rem] md:rounded-[4rem] overflow-hidden border border-zinc-100 hover:border-[#044396]/20 transition-all duration-700 group shadow-[0_30px_60px_rgba(0,0,0,0.03)] hover:shadow-[0_50px_100px_rgba(4,67,150,0.08)] flex flex-col h-full"
             >
-              {/* Image Container */}
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-60 md:h-72 overflow-hidden">
                 <Image
                   src={post.imageUrl}
                   alt={post.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover group-hover:scale-110 transition-transform duration-1000"
                 />
-                {/* Category Badge */}
-                <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <span className="absolute top-6 left-6 md:top-8 md:left-8 bg-white/95 backdrop-blur-md text-[#044396] text-[10px] font-black px-6 py-2.5 rounded-full uppercase tracking-[0.4em] shadow-2xl">
                   {post.category}
                 </span>
               </div>
 
-              {/* Content */}
-              <div className="p-6 flex-1 flex flex-col">
-                {/* Metadata */}
-                <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5" />
-                    {post.date}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5" />
-                    {post.readTime}
-                  </span>
+              <div className="p-8 md:p-12 flex-1 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-2xl font-bold text-slate-900 mb-6 leading-tight tracking-tight group-hover:text-[#044396] transition-colors">
+                    {post.title}
+                  </h4>
+                  <p className="text-slate-700 text-base leading-relaxed mb-12 line-clamp-3 font-medium">
+                    &ldquo;{post.excerpt}&rdquo;
+                  </p>
                 </div>
 
-                <h4 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
-                  <Link href={`/blog/${post.slug}`}>
-                    {post.title}
-                  </Link>
-                </h4>
-
-                <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3 flex-1">
-                  {post.excerpt}
-                </p>
-
-                {/* Footer / Author */}
-                <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                      <User className="w-4 h-4 text-gray-500" />
+                <div className="pt-10 border-t border-zinc-50 flex items-center justify-between">
+                  <div className="flex items-center gap-5">
+                    <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center text-[#044396] font-black text-2xl shadow-inner group-hover:bg-[#044396] group-hover:text-white transition-all duration-500">
+                      {post.author[0]}
                     </div>
-                    <span className="text-sm font-medium text-gray-700">{post.author}</span>
+                    <span className="text-[10px] font-black text-zinc-300 uppercase tracking-[0.3em] group-hover:text-black transition-colors">{post.author}</span>
                   </div>
-
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all"
+                  <motion.div
+                    whileHover={{ scale: 1.1, backgroundColor: "#044396", color: "#fff" }}
+                    className="p-4 rounded-full bg-zinc-50 text-zinc-400 transition-all duration-500 shadow-sm"
                   >
-                    Read
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                    <ArrowRight size={24} weight="bold" />
+                  </motion.div>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
-
-        {/* Mobile View All Button (Only visible on small screens) */}
-        <div className="mt-10 text-center md:hidden">
-          <Link
-            href="/blog"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-full text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-          >
-            View all articles
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
       </div>
     </section>
   );

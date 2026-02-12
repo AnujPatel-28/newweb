@@ -1,36 +1,64 @@
-'use client';
+"use client";
 
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Broadcast, RocketLaunch } from 'phosphor-react';
+import { motion } from "framer-motion";
+
+import GridPattern from '../ui/GridPattern';
 
 export default function CTASection() {
+
+
     return (
-        <section className="py-24 relative overflow-hidden">
-            {/* Background with Gradient */}
-            {/* Background with Transparent Gradient */}
-            <div className="absolute inset-0 bg-blue-600/5 z-0" />
+        <section
+            className="py-20 md:py-80 relative overflow-hidden bg-white flex items-center justify-center"
+        >
+            {/* Background Ambience */}
+            <GridPattern opacity={0.5} />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white pointer-events-none" />
 
-            {/* Abstract Shapes */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
-            <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-                <h2 className="text-3xl md:text-5xl font-bold text-[#262F40] mb-6 tracking-tight">
-                    Ready to Build Your Dream Team?
-                </h2>
-                <p className="text-xl text-slate-500 mb-10 max-w-2xl mx-auto">
-                    Join TalentMesh Solutions today and experience the future of recruitment with AI-driven precision.
-                </p>
+            <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1.2, ease: "circOut" }}
+                    viewport={{ once: true }}
+                    className="flex flex-col items-center"
+                >
+                    <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-[#044396]/10 bg-white text-[#044396] text-[11px] font-mono font-bold uppercase tracking-[0.2em] mb-12 shadow-2xl backdrop-blur-sm">
+                        <Broadcast size={16} weight="bold" className="animate-pulse" />
+                        Next Steps
+                    </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button className="bg-white text-blue-700 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 group">
-                        Sign Up Now
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                    <button className="bg-transparent border border-white/30 text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-colors backdrop-blur-sm">
-                        Schedule a Demo
-                    </button>
-                </div>
+                    <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-slate-900 leading-tight tracking-tight mb-16">
+                        Scale Your <br />
+                        <span className="text-[#044396]">Vision.</span>
+                    </h2>
+
+                    <p className="text-xl md:text-2xl text-slate-700 max-w-2xl mx-auto font-medium leading-relaxed mb-24">
+                        Exceptional <span className="text-slate-900 font-bold">Candidates</span>. Visionary <span className="text-slate-900 font-bold">Partners</span>. <br className="hidden sm:block" /> One cohesive ecosystem.
+                    </p>
+
+                    <div className="flex flex-col md:flex-row gap-10 justify-center items-center">
+                        <motion.button
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="group flex items-center gap-6 bg-[#044396] px-14 py-7 rounded-2xl text-white font-black font-mono text-[13px] uppercase tracking-[0.3em] transition-all shadow-[0_30px_60px_rgba(4,67,150,0.3)] hover:shadow-none"
+                        >
+                            Start Hiring
+                            <RocketLaunch size={24} weight="bold" className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />
+                        </motion.button>
+
+                        <motion.button
+                            whileHover={{ x: 5 }}
+                            className="flex items-center gap-4 text-[#000000]/50 hover:text-[#044396] font-black font-mono text-sm uppercase tracking-[0.3em] transition-all"
+                        >
+                            Connect With Us
+                            <ArrowRight size={20} weight="bold" />
+                        </motion.button>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );

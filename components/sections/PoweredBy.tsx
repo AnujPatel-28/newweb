@@ -1,81 +1,64 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Atom, Box, Zap, Wind } from 'lucide-react';
+import { Atom, Cube, Wind, Cpu, ShieldCheck } from 'phosphor-react';
+
+import GridPattern from '../ui/GridPattern';
 
 export default function PoweredBy() {
-    const containerRef = useRef<HTMLDivElement>(null);
-
     return (
-        <section className="relative w-full bg-transparent py-24 text-slate-800 overflow-hidden" ref={containerRef}>
-
-            <div className="container relative z-10 mx-auto px-4">
+        <section className="relative w-full bg-white py-16 md:py-32 text-[#000000] overflow-hidden">
+            <GridPattern opacity={0.5} />
+            <div className="container relative z-10 mx-auto px-6">
 
                 {/* HEADER */}
-                <div className="mb-20 text-center">
+                <div className="mb-20 md:mb-32 text-center">
+                    <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-[#044396]/10 bg-[#044396]/5 text-[#044396] text-[11px] font-mono font-bold uppercase tracking-[0.2em] mb-12 backdrop-blur-sm shadow-2xl">
+                        <Cpu size={18} weight="bold" className="animate-pulse" />
+                        Infrastructure Layer
+                    </div>
                     <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="text-3xl font-bold tracking-tight md:text-5xl text-[#262F40]"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1.2, ease: "circOut" }}
+                        className="text-4xl sm:text-6xl md:text-8xl font-bold text-slate-900 tracking-tight leading-tight"
                     >
-                        Built on a foundation of precision-driven talent acquisition
+                        Built on <br />
+                        <span className="text-[#044396]">Elite Stacks.</span>
                     </motion.h2>
                 </div>
 
-                {/* MAIN CIRCUIT AREA */}
+                {/* MAIN CONTENT AREA */}
                 <div className="relative flex flex-col items-center">
 
-                    {/* 1. CENTRAL CHIP */}
-                    <div className="relative z-20 mb-8 sm:mb-16">
+                    {/* 1. CENTRAL UNIT */}
+                    <div className="relative z-20 mb-20">
                         <Chip />
                     </div>
 
-                    {/* 2. WIRES (SVG Layer) */}
-                    <div className="absolute top-[95px] left-0 h-[300px] w-full hidden md:block pointer-events-none z-10">
-                        <CircuitLines />
-                    </div>
-
-                    {/* 3. CARDS GRID */}
-                    <div className="relative z-20 grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 pt-8 md:pt-16">
+                    {/* 2. CARDS GRID */}
+                    <div className="relative z-20 grid w-full max-w-7xl grid-cols-1 gap-8 md:gap-12 md:grid-cols-3 pt-12 md:pt-24">
 
                         <FeatureCard
-                            icon={
-                                <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
-                                    <Atom className="h-8 w-8 text-blue-600" />
-                                </motion.div>
-                            }
+                            icon={<Atom size={48} weight="duotone" />}
                             title="Strategic Sourcing"
                             description="The cornerstone of high-performance teams. Talent Mesh identifies top-tier talent through a global network, focusing on deep technical expertise and long-term cultural alignment."
                             delay={0.2}
-                            gradient="from-blue-50/80 to-white/50"
-                            borderColor="border-blue-200"
                         />
 
                         <FeatureCard
-                            icon={
-                                <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-                                    <Box className="h-8 w-8 text-purple-600" />
-                                </motion.div>
-                            }
+                            icon={<Cube size={48} weight="duotone" />}
                             title="Intelligent Matching"
                             description="A data-driven vetting process optimized for speed and accuracy. We utilize advanced assessment frameworks to filter for the highest caliber of candidates, integrated into your specific workflow."
-                            gradient="from-purple-50/80 to-white/50"
-                            borderColor="border-purple-200"
+                            delay={0.4}
                         />
 
                         <FeatureCard
-                            icon={
-                                <motion.div animate={{ skewX: [-5, 5, -5] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
-                                    <Wind className="h-8 w-8 text-orange-600" />
-                                </motion.div>
-                            }
+                            icon={<Wind size={48} weight="duotone" />}
                             title="High-Velocity Placement"
                             description="An agile recruitment platform for the next generation of business growth. Our streamlined methodology ensures rapid talent acquisition and seamless onboarding for specialized roles."
                             delay={0.6}
-                            gradient="from-orange-50/80 to-white/50"
-                            borderColor="border-orange-200"
                         />
 
                     </div>
@@ -91,143 +74,70 @@ function Chip() {
         <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative flex items-center justify-center"
+            transition={{ duration: 1, ease: "circOut" }}
+            className="relative flex items-center justify-center p-12"
         >
             {/* Glow behind chip */}
-            <div className="absolute inset-0 rounded-xl bg-blue-500/20 blur-2xl" />
+            <div className="absolute inset-0 rounded-full bg-[#044396]/15 blur-[80px]" />
 
-            {/* The Chip Body */}
-            <div className="relative h-20 w-48 rounded-xl border border-blue-100 bg-white/80 shadow-xl flex items-center justify-center overflow-hidden backdrop-blur-sm">
+            {/* The Chip Body - ENHANCED */}
+            <div className="relative h-32 w-80 md:w-96 rounded-[3rem] border border-[#044396]/20 bg-white/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(4,67,150,0.15)] flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#044396_1px,transparent_1px)] [background-size:16px_16px]" />
 
-                {/* Inner "Circuit" pattern */}
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:8px_8px]" />
-
-                {/* Text */}
-                <div className="relative z-10 flex items-center gap-2">
-                    <span className="text-lg font-semibold text-slate-600">Talent Mesh</span>
+                <div className="relative z-10 flex items-center gap-5 px-8">
+                    <div className="h-4 w-4 rounded-full bg-[#044396] shadow-[0_0_15px_rgba(4,67,150,0.5)] animate-pulse" />
+                    <span className="text-xl md:text-2xl font-black font-mono text-[#044396] tracking-tight uppercase">Talent Framework</span>
                 </div>
 
+                {/* Tech Accents */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#044396]/30 rounded-full" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#044396]/30 rounded-full" />
+
                 {/* Pins */}
-                <div className="absolute -left-1 top-1/2 h-8 w-2 -translate-y-1/2 bg-slate-300 rounded-r-md" />
-                <div className="absolute -right-1 top-1/2 h-8 w-2 -translate-y-1/2 bg-slate-300 rounded-l-md" />
-
-                <div className="absolute left-1/4 -top-1 h-2 w-6 bg-slate-300 rounded-b-md" />
-                <div className="absolute right-1/4 -top-1 h-2 w-6 bg-slate-300 rounded-b-md" />
-                <div className="absolute left-1/4 -bottom-1 h-2 w-6 bg-slate-300 rounded-t-md" />
-                <div className="absolute right-1/4 -bottom-1 h-2 w-6 bg-slate-300 rounded-t-md" />
+                <div className="absolute -left-1 top-1/2 h-12 w-3 -translate-y-1/2 bg-gradient-to-r from-[#044396] to-transparent rounded-r-full" />
+                <div className="absolute -right-1 top-1/2 h-12 w-3 -translate-y-1/2 bg-gradient-to-l from-[#044396] to-transparent rounded-l-full" />
             </div>
-
-            {/* Connecting "Wires" sticking out slightly */}
-            <div className="absolute left-0 top-1/2 w-full h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-50" />
         </motion.div>
     );
 }
 
-function CircuitLines() {
-    return (
-        <svg className="w-full h-full" viewBox="0 0 1000 300" preserveAspectRatio="none">
-            <defs>
-                <linearGradient id="trace-blue" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0" />
-                    <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.5" />
-                </linearGradient>
-                <linearGradient id="trace-gray" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#161224ff" stopOpacity="0" />
-                    <stop offset="50%" stopColor="#161224ff" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#3339eaff" stopOpacity="0.5" />
-                </linearGradient>
-                <linearGradient id="trace-orange" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#f97316" stopOpacity="0" />
-                    <stop offset="50%" stopColor="#f97316" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#fbbf24" stopOpacity="0.5" />
-                </linearGradient>
-                <linearGradient id="trace-purple" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#5b33eaff" stopOpacity="0" />
-                    <stop offset="50%" stopColor="#3339eaff" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#3339eaff" stopOpacity="0.5" />
-                </linearGradient>
-            </defs>
 
-            <CircuitPath
-                d="M 450 0 L 400 0 L 400 70 L 200 70 L 200 260"
-                stroke="url(#trace-blue)"
-            />
-
-            <CircuitPath
-                d="M 500 0 L 500 20 L 520 20 L 520 230"
-                stroke="url(#trace-purple)"
-                delay={0.15}
-            />
-
-            <CircuitPath
-                d="M 550 0 L 600 0 L 600 70 L 800 70 L 800 260"
-                stroke="url(#trace-orange)"
-                delay={0.3}
-            />
-        </svg>
-    )
-}
-
-function CircuitPath({ d, stroke, delay = 0 }: { d: string, stroke: string, delay?: number }) {
-    return (
-        <>
-            <path d={d} stroke={stroke} strokeWidth="2" fill="none" opacity="0.3" />
-            <motion.path
-                d={d}
-                stroke={stroke}
-                strokeWidth="2.5"
-                fill="none"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                transition={{ duration: 1.5, ease: "easeInOut", delay }}
-            />
-            <motion.circle r="3" fill="#3b82f6">
-                <animateMotion
-                    dur="2s"
-                    repeatCount="indefinite"
-                    path={d}
-                    calcMode="linear"
-                />
-            </motion.circle>
-        </>
-    )
-}
 
 function FeatureCard({
-    icon, title, description, delay, gradient, borderColor
+    icon, title, description, delay
 }: {
     icon: React.ReactNode,
     title: string,
     description: string,
-    delay: number,
-    gradient: string,
-    borderColor: string
+    delay: number
 }) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: delay + 0.5 }}
-            className={`relative group rounded-2xl border bg-white/60 p-8 backdrop-blur-md ${borderColor} transition-all hover:bg-white/80 hover:shadow-lg`}
+            transition={{
+                duration: 1,
+                delay,
+                type: "spring",
+                stiffness: 50,
+                damping: 15
+            }}
+            whileHover={{ y: -15 }}
+            className="group relative rounded-[3rem] border border-zinc-100 bg-gradient-to-br from-white to-zinc-50/50 p-8 md:p-14 shadow-[0_20px_40px_rgba(0,0,0,0.03)] hover:shadow-[0_40px_80px_rgba(4,67,150,0.12)] transition-all duration-500 hover:border-[#044396]/30 overflow-hidden"
         >
-            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${gradient} opacity-0 transition-opacity group-hover:opacity-100`} />
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#044396] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
 
-            <div className="relative z-10">
-                <div className="mb-4 inline-flex items-center justify-center rounded-lg bg-blue-50/50 p-3 shadow-sm">
-                    <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                    >
-                        {icon}
-                    </motion.div>
+            <div className="relative z-10 text-center flex flex-col items-center">
+                <div className="mb-10 w-24 h-24 flex items-center justify-center bg-white border border-zinc-100 rounded-[2rem] group-hover:bg-[#044396] group-hover:text-white group-hover:scale-110 transition-all duration-500 shadow-lg group-hover:shadow-blue-900/20 text-[#044396]">
+                    {icon}
                 </div>
-                <h3 className="mb-3 text-xl font-bold text-slate-800">{title}</h3>
-                <p className="text-sm leading-relaxed text-slate-600">
+                <h3 className="mb-6 text-2xl font-bold text-slate-900 group-hover:text-[#044396] transition-colors tracking-tight">{title}</h3>
+                <p className="text-slate-600 font-medium text-base leading-relaxed group-hover:text-slate-800 transition-colors">
                     {description}
                 </p>
-                <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-slate-200" />
+            </div>
+            <div className="absolute top-8 right-8">
+                <ShieldCheck size={24} weight="bold" className="text-zinc-200 group-hover:text-[#044396]/30 transition-all" />
             </div>
         </motion.div>
     );

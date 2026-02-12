@@ -1,116 +1,136 @@
 "use client";
 
 import React from "react";
-import { 
-  Code2, 
-  Stethoscope, 
-  TrendingUp, 
-  Cpu, 
-  Megaphone, 
-  ShoppingCart, 
-  ArrowRight 
-} from "lucide-react";
-import Industries from "./Industries";
+import {
+  Code,
+  FirstAid,
+  ChartLineUp,
+  Cpu,
+  Megaphone,
+  ShoppingCart,
+  ArrowRight,
+  Sparkle
+} from "phosphor-react";
+import { motion } from "framer-motion";
 
 const industries = [
   {
-    title: "ITt & Software",
+    title: "IT & Software",
     description: "Sourcing elite DevOps, Full-Stack, and AI engineers for next-gen platforms.",
-    icon: <Code2 className="w-6 h-6" />,
-    gradient: "from-cyan-400 to-blue-500",
+    icon: <Code size={32} weight="duotone" />,
+    gradient: "from-blue-500 to-indigo-600",
   },
   {
     title: "Healthcare",
     description: "Connecting specialized medical professionals with top-tier institutions.",
-    icon: <Stethoscope className="w-6 h-6" />,
-    gradient: "from-emerald-400 to-green-500",
+    icon: <FirstAid size={32} weight="duotone" />,
+    gradient: "from-emerald-500 to-teal-600",
   },
   {
     title: "Fintech",
     description: "Quantitative analysts and blockchain experts for the future of finance.",
-    icon: <TrendingUp className="w-6 h-6" />,
-    gradient: "from-indigo-400 to-purple-500",
+    icon: <ChartLineUp size={32} weight="duotone" />,
+    gradient: "from-violet-500 to-purple-600",
   },
   {
     title: "Engineering",
     description: "Technical staffing for robotics, civil, and aerospace verticals.",
-    icon: <Cpu className="w-6 h-6" />,
-    gradient: "from-orange-400 to-red-500",
+    icon: <Cpu size={32} weight="duotone" />,
+    gradient: "from-orange-500 to-red-600",
   },
   {
-    title: "Growth & Marketing",
+    title: "Marketing",
     description: "Data-driven marketers and creative directors who scale brands.",
-    icon: <Megaphone className="w-6 h-6" />,
-    gradient: "from-pink-400 to-rose-500",
+    icon: <Megaphone size={32} weight="duotone" />,
+    gradient: "from-pink-500 to-rose-600",
   },
   {
     title: "E-commerce",
     description: "Logistics and supply chain management for the digital retail age.",
-    icon: <ShoppingCart className="w-6 h-6" />,
-    gradient: "from-violet-400 to-fuchsia-500",
+    icon: <ShoppingCart size={32} weight="duotone" />,
+    gradient: "from-cyan-500 to-blue-600",
   },
 ];
 
-const IndustriesSection = () => {
+const Industries2 = () => {
   return (
-    <section className="py-24 bg-[#0F1117] relative overflow-hidden" id="industries">
-      
-      {/* Background Gradients (Subtle Glows) */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+    <section className="py-64 bg-[#0a0a0b] relative overflow-hidden" id="industries-2">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+      {/* Background Gradients (Subtle Glows) */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#044396]/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+
         {/* Header */}
-        <div className="mb-16 md:flex md:justify-between md:items-end">
-          <div className="max-w-2xl">
-            <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-semibold tracking-wider uppercase text-sm mb-3">
+        <div className="mb-32 md:flex md:justify-between md:items-end">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: "circOut" }}
+            viewport={{ once: true }}
+            className="max-w-3xl"
+          >
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border border-white/5 bg-white/5 text-white text-[11px] font-bold uppercase tracking-[0.2em] mb-12 backdrop-blur-sm">
+              <Sparkle size={18} weight="bold" className="text-[#044396] animate-pulse" />
               Core Sectors
-            </h2>
-            <h3 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
-              Specialized Talent <br /> For Complex Industries.
+            </div>
+            <h3 className="text-6xl md:text-8xl font-bold text-white leading-tight tracking-tight">
+              Specialized <br />
+              <span className="text-[#044396]">Talent Nodes.</span>
             </h3>
-          </div>
-          <p className="hidden md:block text-slate-400 max-w-sm text-sm leading-relaxed text-right">
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: "circOut", delay: 0.2 }}
+            viewport={{ once: true }}
+            className="hidden md:block text-zinc-500 max-w-sm text-lg font-medium leading-relaxed text-right"
+          >
             We don't generalize. We specialize. Deep expertise in the fields that matter most.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {industries.map((industry, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group relative p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.8 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="group relative p-12 rounded-[3.5rem] bg-white/[0.02] border border-white/[0.05] hover:border-[#044396]/30 transition-all duration-500 overflow-hidden"
             >
-              {/* Hover Gradient Overlay */}
-              <div 
-                className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br ${industry.gradient}`} 
+              <div
+                className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 bg-gradient-to-br ${industry.gradient}`}
               />
-              
+
               <div className="relative z-10">
                 {/* Icon Box */}
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-gradient-to-br ${industry.gradient} shadow-lg shadow-black/50`}>
-                  <div className="text-white">
+                <div className={`w-20 h-20 rounded-[1.8rem] flex items-center justify-center mb-10 bg-[#111112] border border-white/5 shadow-2xl group-hover:scale-110 transition-transform duration-500`}>
+                  <div className="text-white group-hover:text-[#044396] transition-colors duration-500">
                     {industry.icon}
                   </div>
                 </div>
 
-                <h4 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-300 transition-all">
+                <h4 className="text-3xl font-bold text-white mb-6 tracking-tight group-hover:text-[#044396] transition-all">
                   {industry.title}
                 </h4>
-                
-                <p className="text-slate-400 text-sm leading-relaxed mb-6 group-hover:text-slate-300 transition-colors">
+
+                <p className="text-zinc-500 text-lg leading-relaxed mb-10 group-hover:text-zinc-300 transition-colors font-medium">
                   {industry.description}
                 </p>
 
                 {/* Arrow Link */}
-                <div className="flex items-center gap-2 text-sm font-medium text-white/50 group-hover:text-white transition-colors cursor-pointer">
-                  <span>Explore roles</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <div className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/30 group-hover:text-white transition-colors cursor-pointer">
+                  <span>Explore Protocol</span>
+                  <ArrowRight size={18} weight="bold" className="group-hover:translate-x-2 transition-transform duration-500" />
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -119,4 +139,4 @@ const IndustriesSection = () => {
   );
 };
 
-export default Industries;
+export default Industries2;
